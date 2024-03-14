@@ -6,9 +6,9 @@ import dev.sachin.BookMyShow.model.City;
 import dev.sachin.BookMyShow.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class CityController {
@@ -28,5 +28,22 @@ public class CityController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @GetMapping("/city/{name}")
+    public ResponseEntity getCityByName(@PathVariable("name") String cityName){
+        City city = cityService.getCityName(cityName);
+        return ResponseEntity.ok(city);
+    }
+
+//    @GetMapping("/city/{Id}")
+//    public ResponseEntity getCityById(@PathVariable("Id") int id){
+//        Optional<City> city = cityService.getCityById(id);
+//        return ResponseEntity.ok(city);
+//    }
+    @DeleteMapping("/city/{Id}")
+    public ResponseEntity deleteCityName(@PathVariable("Id") int cityId){
+        boolean isDeleted =  cityService.deleteCity(cityId);
+        return ResponseEntity.ok(isDeleted);
     }
 }
